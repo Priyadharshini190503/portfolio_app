@@ -10,9 +10,9 @@ class PortfolioApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const PortfolioHome(),
+      home: PortfolioHome(),
     );
   }
 }
@@ -20,12 +20,10 @@ class PortfolioApp extends StatelessWidget {
 class PortfolioHome extends StatelessWidget {
   const PortfolioHome({super.key});
 
-  /// 🔹 Launch WhatsApp
   void openWhatsApp() async {
-    final phone = "+919876543210"; // Replace with your WhatsApp number with country code
-    final message = "Hello Priyadharshini!"; // Optional pre-filled message
+    final phone = "+919876543210";
+    final message = "Hello Priyadharshini!";
     final url = "https://wa.me/$phone?text=${Uri.encodeComponent(message)}";
-
     if (await canLaunchUrl(Uri.parse(url))) {
       await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
     } else {
@@ -33,10 +31,8 @@ class PortfolioHome extends StatelessWidget {
     }
   }
 
-  /// 🔹 Launch Resume PDF link
   void openResume() async {
-    final url = "https://example.com/my_resume.pdf"; // Replace with your resume link
-
+    final url = "https://example.com/my_resume.pdf";
     if (await canLaunchUrl(Uri.parse(url))) {
       await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
     } else {
@@ -46,152 +42,108 @@ class PortfolioHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final isMobile = size.width < 600;
+
     return Scaffold(
       backgroundColor: Colors.black,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+          padding: EdgeInsets.symmetric(
+            horizontal: isMobile ? 30 : 60,
+            vertical: isMobile ? 50 : 60,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              /// 🔹 Top Navigation Bar
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.3),
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    navItem("Home"),
-                    navItem("About"),
-                    navItem("Projects"),
-                    navItem("Contact"),
-                  ],
-                ),
-              ),
+              const SizedBox(height: 40),
 
-              const SizedBox(height: 50),
-
-              /// 🔹 Name
-              const Text(
+              Text(
                 "Hi! I'm Priyadharshini",
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 18,
+                  fontSize: isMobile ? 18 : 22,
                   fontWeight: FontWeight.w500,
                 ),
               ),
-
               const SizedBox(height: 20),
 
-              /// 🔹 Profile Picture
-              const CircleAvatar(
-                radius: 60,
-                backgroundImage: AssetImage("assets/profile.jpg"),
+              CircleAvatar(
+                radius: isMobile ? 50 : 70,
+                backgroundImage: const AssetImage("assets/profile.jpg"),
               ),
-
               const SizedBox(height: 20),
 
-              /// 🔹 Headline
-              const Text(
+              Text(
                 "Full Stack Developer",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 28,
+                  fontSize: isMobile ? 22 : 32,
                   fontWeight: FontWeight.bold,
                 ),
               ),
+              const SizedBox(height: 20),
 
-              /// 🔹 Subheadline / Bio
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              ConstrainedBox(
+                constraints: BoxConstraints(maxWidth: isMobile ? 400 : 800),
                 child: Text(
-                  "I am a Full Stack Developer based in Chennai, India, with 6 months of professional experience building modern web applications using React, Express, and MongoDB. "
-                      "Currently, I am expanding my expertise into Flutter to create high-quality mobile applications, delivering seamless cross-platform experiences.",
+                  "I am a Full Stack Developer based in Chennai, India, with 6 months of professional experience building modern web applications using React, Express, and MongoDB. Currently, I am expanding my expertise into Flutter to create high-quality mobile applications, delivering seamless cross-platform experiences.",
                   textAlign: TextAlign.justify,
                   style: TextStyle(
                     color: Colors.white70,
-                    fontSize: 14,
+                    fontSize: isMobile ? 13 : 15,
                   ),
                 ),
               ),
 
-              const SizedBox(height: 25),
+              const SizedBox(height: 30),
 
-              /// 🔹 Buttons (Contact Me + Resume)
               Wrap(
                 alignment: WrapAlignment.center,
                 spacing: 15,
                 runSpacing: 15,
                 children: [
-                  // Contact Me Button
                   ElevatedButton(
                     onPressed: openWhatsApp,
                     style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 14),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: isMobile ? 55 : 620,  // use smaller padding for mobile
+                        vertical: isMobile ? 12 : 18,
                       ),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                       backgroundColor: Colors.transparent,
                       shadowColor: Colors.transparent,
                     ),
                     child: Ink(
                       decoration: BoxDecoration(
-                        gradient: const LinearGradient(colors: [Colors.pink, Colors.orange]),
+                        gradient: LinearGradient(colors: [Colors.pink, Colors.orange]),
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: Container(
                         alignment: Alignment.center,
-                        constraints: const BoxConstraints(minWidth: 120),
-                        child: const Text(
-                          "Contact Me",
-                          style: TextStyle(color: Colors.white, fontSize: 16),
-                        ),
+                        constraints: BoxConstraints(minWidth: 140),
+                        padding: EdgeInsets.symmetric(vertical: 7),
+                        child: Text("Contact Me", style: TextStyle(color: Colors.white, fontSize: 16)),
                       ),
                     ),
                   ),
 
-                  // Resume Button
                   OutlinedButton.icon(
                     onPressed: openResume,
-                    icon: const Icon(Icons.download, color: Colors.white),
-                    label: const Text(
-                      "My Resume",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
-                    ),
+                    icon: Icon(Icons.download, color: Colors.white),
+                    label: Text("My Resume", style: TextStyle(color: Colors.white, fontSize: 16)),
                     style: OutlinedButton.styleFrom(
-                      side: const BorderSide(color: Colors.white),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                      side: BorderSide(color: Colors.white),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 14),
                     ),
                   ),
+
                 ],
               ),
-
-              const SizedBox(height: 50),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  /// 🔹 Helper widget for navigation items
-  Widget navItem(String title) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
-      child: Text(
-        title,
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 14,
-          fontWeight: FontWeight.w500,
         ),
       ),
     );
