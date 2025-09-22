@@ -123,7 +123,7 @@ class PortfolioHome extends StatelessWidget {
                             ),
                             child: Container(
                               alignment: Alignment.center,
-                              padding: const EdgeInsets.symmetric(vertical: 12),
+                              padding: const EdgeInsets.symmetric(vertical: 15),
                               child: const Text("Contact Me", style: TextStyle(color: Colors.white, fontSize: 16)),
                             ),
                           ),
