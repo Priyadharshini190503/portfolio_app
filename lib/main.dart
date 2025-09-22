@@ -21,7 +21,7 @@ class PortfolioHome extends StatelessWidget {
   const PortfolioHome({super.key});
 
   void openWhatsApp() async {
-    final phone = "+919876543210";
+    final phone = "+917305573342";
     final message = "Hello Priyadharshini!";
     final url = "https://wa.me/$phone?text=${Uri.encodeComponent(message)}";
     if (await canLaunchUrl(Uri.parse(url))) {
@@ -32,7 +32,7 @@ class PortfolioHome extends StatelessWidget {
   }
 
   void openResume() async {
-    final url = "https://example.com/my_resume.pdf";
+    final url = "https://drive.google.com/file/d/1MfW2sKfbZ1zELHDahvPkFIahUwsO_Z9N/view?usp=drive_link";
     if (await canLaunchUrl(Uri.parse(url))) {
       await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
     } else {
@@ -99,49 +99,88 @@ class PortfolioHome extends StatelessWidget {
 
               const SizedBox(height: 30),
 
-              Wrap(
-                alignment: WrapAlignment.center,
-                spacing: 15,
-                runSpacing: 15,
-                children: [
-                  ElevatedButton(
-                    onPressed: openWhatsApp,
-                    style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: isMobile ? 55 : 620,  // use smaller padding for mobile
-                        vertical: isMobile ? 12 : 18,
-                      ),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                      backgroundColor: Colors.transparent,
-                      shadowColor: Colors.transparent,
+              // Responsive buttons layout
+              isMobile
+                  ? Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        ElevatedButton(
+                          onPressed: openWhatsApp,
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 30,
+                              vertical: 14,
+                            ),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                            backgroundColor: Colors.transparent,
+                            shadowColor: Colors.transparent,
+                          ),
+                          child: Ink(
+                            decoration: BoxDecoration(
+                              gradient: const LinearGradient(colors: [Colors.pink, Colors.orange]),
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: Container(
+                              alignment: Alignment.center,
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                              child: const Text("Contact Me", style: TextStyle(color: Colors.white, fontSize: 16)),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        OutlinedButton.icon(
+                          onPressed: openResume,
+                          icon: const Icon(Icons.download, color: Colors.white),
+                          label: const Text("My Resume", style: TextStyle(color: Colors.white, fontSize: 16)),
+                          style: OutlinedButton.styleFrom(
+                            side: const BorderSide(color: Colors.white),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 14),
+                          ),
+                        ),
+                      ],
+                    )
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton(
+                          onPressed: openWhatsApp,
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 30,
+                              vertical: 14,
+                            ),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                            backgroundColor: Colors.transparent,
+                            shadowColor: Colors.transparent,
+                          ),
+                          child: Ink(
+                            decoration: BoxDecoration(
+                              gradient: const LinearGradient(colors: [Colors.pink, Colors.orange]),
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: Container(
+                              alignment: Alignment.center,
+                              constraints: const BoxConstraints(minWidth: 140),
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                              child: const Text("Contact Me", style: TextStyle(color: Colors.white, fontSize: 16)),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 20),
+                        OutlinedButton.icon(
+                          onPressed: openResume,
+                          icon: const Icon(Icons.download, color: Colors.white),
+                          label: const Text("My Resume", style: TextStyle(color: Colors.white, fontSize: 16)),
+                          style: OutlinedButton.styleFrom(
+                            side: const BorderSide(color: Colors.white),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 14),
+                          ),
+                        ),
+                      ],
                     ),
-                    child: Ink(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(colors: [Colors.pink, Colors.orange]),
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: Container(
-                        alignment: Alignment.center,
-                        constraints: BoxConstraints(minWidth: 140),
-                        padding: EdgeInsets.symmetric(vertical: 7),
-                        child: Text("Contact Me", style: TextStyle(color: Colors.white, fontSize: 16)),
-                      ),
-                    ),
-                  ),
-
-                  OutlinedButton.icon(
-                    onPressed: openResume,
-                    icon: Icon(Icons.download, color: Colors.white),
-                    label: Text("My Resume", style: TextStyle(color: Colors.white, fontSize: 16)),
-                    style: OutlinedButton.styleFrom(
-                      side: BorderSide(color: Colors.white),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 14),
-                    ),
-                  ),
-
-                ],
-              ),
             ],
           ),
         ),
