@@ -128,7 +128,7 @@ class PortfolioHome extends StatelessWidget {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 15),
                         OutlinedButton.icon(
                           onPressed: openResume,
                           icon: const Icon(Icons.download, color: Colors.white),
